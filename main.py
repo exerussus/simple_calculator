@@ -18,6 +18,17 @@ Config.write()
 
 class CalculatorApp(App):
 
+    def add_point(self, instance):
+        if self.form_text == '0':
+            self.form_text == '0.'
+            print(self.form_text)
+            self.update_label()
+        else:
+            self.form_text += instance.text
+            self.update_label()
+
+
+
     def clearing(self, instance):
         if instance.text == '<--':
             self.form_text = self.form_text[:-1]
@@ -45,11 +56,11 @@ class CalculatorApp(App):
 
 
 
-    def calc(self):
-        answer = int(self.form_text)
-        self.form_text = self.form_text, '=', str(answer)
+    def calc(self, instance):
+        answer = eval(self.form_text)
+        self.form_text = self.form_text + '=' + str(answer)
         self.update_label()
-
+        self.form_text = str(answer)
 
 
     def build(self):
@@ -81,7 +92,7 @@ class CalculatorApp(App):
 
         gl.add_widget(Button(text='√', on_press=self.add_operation))
         gl.add_widget(Button(text='0', on_press=self.add_number))
-        gl.add_widget(Button(text='.', on_press=self.add_number))
+        gl.add_widget(Button(text='.', on_press=self.add_point))
         gl.add_widget(Button(text='/', on_press=self.add_operation))
 
         bl.add_widget(gl)
