@@ -18,37 +18,55 @@ Config.write()
 
 class CalculatorApp(App):
 
-    def add_number(self):
-        pass
+
+    def clearing(self, instance):
+        if instance.text == '<--':
+            self.formula = self.formula[:-1]
+            self.update_label()
+        if instance.text == 'C':
+            self.formula = ''
+            self.update_label()
+
+    def update_label(self):
+        if self.formula == '':
+            self.formula = '0'
+        self.lbl.text = self.formula
+
+    def add_number(self, instance):
+        if self.formula == '0':
+            self.formula = ''
+        self.formula += str(instance.text)
+        self.update_label()
 
     def build(self):
+        self.formula = ''
         bl = BoxLayout(orientation='vertical', padding=5)
         gl = GridLayout(cols=4, spacing=1, size_hint=(1, .6))
         self.lbl = Label(text='0', font_size=40, halign='right', valign='bottom', size_hint=(1, .4), text_size=(400 - 80, 500 * .4 - 50))
         bl.add_widget(self.lbl)
 
-        gl.add_widget(Button(text='<--'))
-        gl.add_widget(Button(text='C'))
+        gl.add_widget(Button(text='<--', on_press=self.clearing))
+        gl.add_widget(Button(text='C', on_press=self.clearing))
         gl.add_widget(Button(text='back'))
         gl.add_widget(Button(text='='))
 
-        gl.add_widget(Button(text='7'))
-        gl.add_widget(Button(text='8'))
-        gl.add_widget(Button(text='9'))
+        gl.add_widget(Button(text='7', on_press=self.add_number))
+        gl.add_widget(Button(text='8', on_press=self.add_number))
+        gl.add_widget(Button(text='9', on_press=self.add_number))
         gl.add_widget(Button(text='x'))
 
-        gl.add_widget(Button(text='4'))
-        gl.add_widget(Button(text='5'))
-        gl.add_widget(Button(text='6'))
+        gl.add_widget(Button(text='4', on_press=self.add_number))
+        gl.add_widget(Button(text='5', on_press=self.add_number))
+        gl.add_widget(Button(text='6', on_press=self.add_number))
         gl.add_widget(Button(text='+'))
 
-        gl.add_widget(Button(text='1'))
-        gl.add_widget(Button(text='2'))
-        gl.add_widget(Button(text='3'))
+        gl.add_widget(Button(text='1', on_press=self.add_number))
+        gl.add_widget(Button(text='2', on_press=self.add_number))
+        gl.add_widget(Button(text='3', on_press=self.add_number))
         gl.add_widget(Button(text='-'))
 
         gl.add_widget(Button(text='√'))
-        gl.add_widget(Button(text='0'))
+        gl.add_widget(Button(text='0', on_press=self.add_number))
         gl.add_widget(Button(text='.'))
         gl.add_widget(Button(text='/'))
 
