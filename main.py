@@ -18,10 +18,13 @@ Config.write()
 
 class CalculatorApp(App):
 
+    def add_number(self):
+        pass
+
     def build(self):
         bl = BoxLayout(orientation='vertical', padding=5)
         gl = GridLayout(cols=4, spacing=1, size_hint=(1, .6))
-        self.lbl = Label(text='0', font_size=40, halign='right', size_hint=(1, .4), text_size=(400 - 80, 500 * .4 - 50))
+        self.lbl = Label(text='0', font_size=40, halign='right', valign='bottom', size_hint=(1, .4), text_size=(400 - 80, 500 * .4 - 50))
         bl.add_widget(self.lbl)
 
         gl.add_widget(Button(text='<--'))
